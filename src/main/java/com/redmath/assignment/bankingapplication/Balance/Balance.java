@@ -1,5 +1,6 @@
 package com.redmath.assignment.bankingapplication.Balance;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.redmath.assignment.bankingapplication.account.Account;
 import com.redmath.assignment.bankingapplication.account.AccountService;
 import jakarta.persistence.*;
@@ -16,18 +17,26 @@ public class Balance {
     private double amount;
     private String balanceType;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
 
     // Constructors, getters, setters, etc.
 
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     public Balance() {
     }
 
-    public Balance(long balance_id, String date, double amount, String balanceType) {
-        this.balance_id = balance_id;
+    public Balance(String date, double amount, String balanceType) {
         this.date = date;
         this.amount = amount;
         this.balanceType = balanceType;

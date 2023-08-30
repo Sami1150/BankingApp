@@ -1,5 +1,6 @@
 package com.redmath.assignment.bankingapplication.Balance;
 
+import com.redmath.assignment.bankingapplication.transaction.Transaction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,20 @@ public class BalanceController {
         }
 
         return ResponseEntity.ok(Map.of("content", balances));
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<Balance> findByAccountId(@PathVariable("accountId") long accountId) {
+        Balance balance = balanceService.findTopByAccountIdOrderByDateDesc(accountId);
+        if (balance == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(balance);
+    }
+    @GetMapping("/viewbalances")
+    public ResponseEntity<List<Balance>> viewTransactions(@RequestParam long accountId) {
+        List<Balance> balances = balanceService.getBalancesByAccountId(accountId);
+        return ResponseEntity.ok(balances);
     }
 
 //    @GetMapping("/{accountId}")

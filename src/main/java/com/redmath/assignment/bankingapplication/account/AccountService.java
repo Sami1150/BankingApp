@@ -1,23 +1,29 @@
 package com.redmath.assignment.bankingapplication.account;
 
+import com.redmath.assignment.bankingapplication.Balance.Balance;
+import com.redmath.assignment.bankingapplication.Balance.BalanceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AccountService {
     private final AccountRepository accountRepository;
+    private final BalanceRepository balanceRepository;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     //Constructor
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, BalanceRepository balanceRepository) {
         this.accountRepository = accountRepository;
+        this.balanceRepository = balanceRepository;
     }
 
     //Logger
@@ -56,7 +62,20 @@ public class AccountService {
 
         logger.info("Account with email {} is added. ", account.getEmail());
 
-        return accountRepository.save(account);
+        // Save the account in the account table
+        Account savedAccount = accountRepository.save(account);
+
+        // Create a new Balance entry with default values and associate it with the account
+        Balance defaultBalance = new Balance();
+        defaultBalance.setBalance_id(savedAccount.getId()+10);
+        defaultBalance.setDate(String.valueOf(LocalDate.now())); // Set current date
+        defaultBalance.setAmount(0.0); // Default amount
+        defaultBalance.setbalanceType("CR"); // Default balance type
+        defaultBalance.setAccount(account);
+        // Save the default balance entry in the balance table
+        balanceRepository.save(defaultBalance);
+
+        return savedAccount;
     }
 
     //Put Mapping
@@ -81,14 +100,16 @@ public class AccountService {
 
     //Delete Mapping
 
-    public boolean delete(String email) {
-        Optional<Account> accountToDelete = accountRepository.findAllByEmail(email);
+    public boolean delete(long id) {
+        Optional<Account> accountToDelete = accountRepository.findById(id);
 
         if (accountToDelete.isPresent()) {
-            accountRepository.delete(accountToDelete.get());
+            Account account = accountToDelete.get();
+            accountRepository.delete(account);
+
             return true;
         }
 
-        return false; // Account with given email not found
+        return false;
     }
 }

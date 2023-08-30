@@ -72,9 +72,9 @@ public class AccountController {
     }
 
     //Delete Mapping
-    @DeleteMapping("/{email}")
-    public ResponseEntity<String> delete(@PathVariable String email) {
-        boolean deleted = accountService.delete(email);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable long id) {
+        boolean deleted = accountService.delete(id);
         if (deleted) {
             return ResponseEntity.ok("Resource deleted successfully");
         }
