@@ -1,13 +1,13 @@
 databaseChangeLog:
   - changeSet:
-      id: schema-balance
-      author: balance team
+      id: schema-transaction
+      author: transaction team
       changes:
         - createTable:
-            tableName: balance
+            tableName: transaction
             columns:
               - column:
-                  name: balance_id
+                  name: transaction_id
                   type: bigint
                   constraints:
                     nullable: false
@@ -18,28 +18,31 @@ databaseChangeLog:
                   name: amount
                   type: numeric(12, 2)
               - column:
-                  name: balance_type
+                  name: transaction_type
                   type: varchar(10)
+              - column:
+                  name: description
+                  type: varchar(50)
               - column:
                   name: account_id
                   type: bigint
                   constraints:
                     nullable: false
         - addAutoIncrement:
-            tableName: balance
-            columnName: balance_id
+            tableName: transaction
+            columnName: transaction_id
             startWith: 100
             incrementBy: 1
             columnDataType: bigint
             generationType: ALWAYS
             defaultOnNull: false
         - addPrimaryKey:
-            tableName: balance
-            columnNames: balance_id
-            constraintName: balance_pk
+            tableName: transaction
+            columnNames: transaction_id
+            constraintName: transaction_pk
         - addForeignKeyConstraint:
-            baseTableName: balance
+            baseTableName: transaction
             baseColumnNames: account_id
             referencedTableName: account
             referencedColumnNames: id
-            constraintName: fk_balance_account
+            constraintName: fk_transaction_account

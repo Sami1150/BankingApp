@@ -38,6 +38,16 @@ public class BalanceController {
         return ResponseEntity.ok(Map.of("content", balances));
     }
 
+    @GetMapping("/{accountId}")
+    public ResponseEntity<Balance> findByAccountId(@PathVariable("accountId") long accountId) {
+        Balance balance = balanceService.findTopByAccountIdOrderByDateDesc(accountId);
+        if (balance == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(balance);
+    }
+
+
 //    @GetMapping("/{accountId}")
 //    public ResponseEntity<Optional<Balance>> findByAccountId(@PathVariable("accountId") long accountId) {
 //        Optional<Balance> balance = balanceService.findByAccountId(accountId);
