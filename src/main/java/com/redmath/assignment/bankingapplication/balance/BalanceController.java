@@ -63,14 +63,14 @@ public class BalanceController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<Balance> update(@RequestBody Balance balance) {
-        Balance updated = balanceService.update(balance);
-        if (updated != null) {
-            return ResponseEntity.ok(updated);
-        }
-        return ResponseEntity.notFound().build();
-    }
+//    @PutMapping("/edit")
+//    public ResponseEntity<Balance> update(@RequestBody Balance balance) {
+//        Balance updated = balanceService.update(balance);
+//        if (updated != null) {
+//            return ResponseEntity.ok(updated);
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
 
 //    @DeleteMapping("/{accountId}")
 //    public ResponseEntity<String> delete(@PathVariable long accountId) {

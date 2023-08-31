@@ -2,7 +2,10 @@ package com.redmath.assignment.bankingapplication.balance;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.redmath.assignment.bankingapplication.account.Account;
+import com.redmath.assignment.bankingapplication.account.AccountService;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name="balance")
@@ -39,6 +42,13 @@ public class Balance {
         this.date = date;
         this.amount = amount;
         this.balanceType = balanceType;
+    }
+    public Balance(long balance_id, String date, double amount, String balanceType, Account account) {
+        this.balance_id=balance_id;
+        this.date = date;
+        this.amount = amount;
+        this.balanceType = balanceType;
+        this.account=account;
     }
 
     public long getBalance_id() {
