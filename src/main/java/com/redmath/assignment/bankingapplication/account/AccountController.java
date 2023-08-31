@@ -1,13 +1,10 @@
 package com.redmath.assignment.bankingapplication.account;
 
-import com.redmath.assignment.bankingapplication.user.User;
-import com.redmath.assignment.bankingapplication.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

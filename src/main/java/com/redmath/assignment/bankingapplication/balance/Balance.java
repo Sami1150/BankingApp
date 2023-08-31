@@ -2,10 +2,7 @@ package com.redmath.assignment.bankingapplication.balance;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.redmath.assignment.bankingapplication.account.Account;
-import com.redmath.assignment.bankingapplication.account.AccountService;
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
 
 @Entity
 @Table(name="balance")

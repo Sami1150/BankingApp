@@ -1,7 +1,6 @@
 package com.redmath.assignment.bankingapplication.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.redmath.assignment.bankingapplication.account.Account;
 import jakarta.persistence.*;
 

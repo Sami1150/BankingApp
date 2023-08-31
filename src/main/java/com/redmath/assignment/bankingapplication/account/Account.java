@@ -4,7 +4,6 @@ import com.redmath.assignment.bankingapplication.balance.Balance;
 import com.redmath.assignment.bankingapplication.transaction.Transaction;
 import com.redmath.assignment.bankingapplication.user.User;
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -68,5 +67,4 @@ public class Account {
     public void setAddress(String address) {
         this.address = address;
     }
-
 }

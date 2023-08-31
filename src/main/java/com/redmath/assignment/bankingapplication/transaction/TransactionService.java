@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TransactionService {
@@ -65,10 +64,10 @@ public class TransactionService {
 
     public Transaction performTransaction(long accountId, double amount, String description, String transactionType) {
         Balance latestBalance = balanceService.findTopByAccountIdOrderByDateDesc(accountId);
-        double updatedBalance = (transactionType.equals("CR")) ? latestBalance.getAmount() + amount : latestBalance.getAmount() - amount;
+        double updatedBalance = transactionType.equals("CR") ? latestBalance.getAmount() + amount : latestBalance.getAmount() - amount;
 
         String currentDate = String.valueOf(LocalDate.now());
-        String balanceType = (updatedBalance >= 0) ? "CR" : "DB";
+        String balanceType = updatedBalance >= 0 ? "CR" : "DB";
 
         if (!currentDate.equals(latestBalance.getDate())) {
             balanceService.createNewBalance(accountId, updatedBalance, balanceType);

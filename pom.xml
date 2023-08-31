@@ -47,10 +47,6 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
@@ -68,6 +64,67 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+<!--			Check Style Plugin-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<configLocation>google_checks.xml</configLocation>
+				</configuration>
+			</plugin>
+<!--PMD Version-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.21.0</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+			</plugin>
+<!--Spotbugs version-->
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>4.7.3.2</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<effort>Max</effort>
+					<threshold>Normal</threshold>
+					<failOnError>true</failOnError>
+					<plugins>
+						<plugin>
+							<groupId>com.h3xstream.findsecbugs</groupId>
+							<artifactId>findsecbugs-plugin</artifactId>
+							<version>LATEST</version>
+						</plugin>
+					</plugins>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

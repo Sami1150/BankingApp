@@ -1,19 +1,16 @@
 package com.redmath.assignment.bankingapplication.account;
 
-import com.redmath.assignment.bankingapplication.balance.Balance;
-import com.redmath.assignment.bankingapplication.balance.BalanceRepository;
+
 import com.redmath.assignment.bankingapplication.balance.BalanceService;
 import com.redmath.assignment.bankingapplication.user.User;
 import com.redmath.assignment.bankingapplication.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
