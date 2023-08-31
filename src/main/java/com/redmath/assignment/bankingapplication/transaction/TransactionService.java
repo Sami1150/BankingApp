@@ -37,7 +37,7 @@ public class TransactionService {
 //        this.transactionRepository = transactionRepository;
 //        this.accountRepository=accountRepository;
 //    }
-    public List<Transaction> findAllTransactinos(Authentication authentication) {
+    public List<Transaction> findAllTransactions(Authentication authentication) {
         logger.debug("Fetching all transactions");
         String username = authentication.getName();
 
@@ -49,10 +49,10 @@ public class TransactionService {
         return transactionRepository.findByAccountId(accountId);
     }
 
-    public List<Transaction> getTransactionsByAccountId(long accountId) {
-        // Fetch all transactions for the given account ID
-        return transactionRepository.findByAccountId(accountId);
-    }
+//    public List<Transaction> getTransactionsByAccountId(long accountId) {
+//        // Fetch all transactions for the given account ID
+//        return transactionRepository.findByAccountId(accountId);
+//    }
     // Post Mapping
     public Transaction create(Transaction transaction) {
         logger.info("Transaction with account ID {} is added. ", transaction.getTransaction_id());
@@ -61,36 +61,36 @@ public class TransactionService {
 
 
     // Put Mapping
-    public Transaction update(Transaction newTransactionData) {
-        logger.info("Transaction with account ID {} is updated. ", newTransactionData.getTransaction_id());
-
-        Optional<Transaction> existingTransaction = transactionRepository.findById(newTransactionData.getTransaction_id());
-
-        if (existingTransaction.isPresent()) {
-            Transaction transactionToUpdate = existingTransaction.get();
-            transactionToUpdate.setDate(newTransactionData.getDate());
-            transactionToUpdate.setAmount(newTransactionData.getAmount());
-            transactionToUpdate.setTransaction_id(newTransactionData.getTransaction_id());
-            transactionToUpdate.setTransactionType(newTransactionData.getTransactionType());
-            transactionToUpdate.setDescription(newTransactionData.getDescription());
-
-            return transactionRepository.save(transactionToUpdate);
-        }
-
-        return null;
-    }
+//    public Transaction update(Transaction newTransactionData) {
+//        logger.info("Transaction with account ID {} is updated. ", newTransactionData.getTransaction_id());
+//
+//        Optional<Transaction> existingTransaction = transactionRepository.findById(newTransactionData.getTransaction_id());
+//
+//        if (existingTransaction.isPresent()) {
+//            Transaction transactionToUpdate = existingTransaction.get();
+//            transactionToUpdate.setDate(newTransactionData.getDate());
+//            transactionToUpdate.setAmount(newTransactionData.getAmount());
+//            transactionToUpdate.setTransaction_id(newTransactionData.getTransaction_id());
+//            transactionToUpdate.setTransactionType(newTransactionData.getTransactionType());
+//            transactionToUpdate.setDescription(newTransactionData.getDescription());
+//
+//            return transactionRepository.save(transactionToUpdate);
+//        }
+//
+//        return null;
+//    }
 
     // Delete Mapping
-    public boolean delete(long accountId) {
-        Optional<Transaction> TransactionToDelete = transactionRepository.findById(accountId);
-
-        if (TransactionToDelete.isPresent()) {
-            transactionRepository.delete(TransactionToDelete.get());
-            return true;
-        }
-
-        return false; // Transaction with given account ID not found
-    }
+//    public boolean delete(long accountId) {
+//        Optional<Transaction> TransactionToDelete = transactionRepository.findById(accountId);
+//
+//        if (TransactionToDelete.isPresent()) {
+//            transactionRepository.delete(TransactionToDelete.get());
+//            return true;
+//        }
+//
+//        return false; // Transaction with given account ID not found
+//    }
 
     public Transaction addFunds(long accountId, double amount, String description) {
         // Fetch the latest balance record for the account
