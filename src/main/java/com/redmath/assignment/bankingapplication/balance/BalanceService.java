@@ -111,4 +111,12 @@ public class BalanceService {
             throw e;
         }
     }
+    public void createNewBalance(long accountId, double updatedBalance, String balanceType) {
+        Balance newBalance = new Balance();
+        newBalance.setAccount(accountRepository.findById(accountId).orElse(null));
+        newBalance.setDate(String.valueOf(LocalDate.now()));
+        newBalance.setAmount(updatedBalance);
+        newBalance.setbalanceType(balanceType);
+        balanceRepository.save(newBalance);
+    }
 }
