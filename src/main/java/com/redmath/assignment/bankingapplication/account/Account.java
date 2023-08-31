@@ -1,7 +1,8 @@
 package com.redmath.assignment.bankingapplication.account;
 
-import com.redmath.assignment.bankingapplication.Balance.Balance;
+import com.redmath.assignment.bankingapplication.balance.Balance;
 import com.redmath.assignment.bankingapplication.transaction.Transaction;
+import com.redmath.assignment.bankingapplication.user.User;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,7 +14,6 @@ public class Account {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    private String password;
     private String name;
     private String email;
     private String address;
@@ -24,18 +24,13 @@ public class Account {
     @OneToMany(mappedBy = "account",cascade = CascadeType.ALL)
     private List<Transaction> transactions;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "fk_account_Id", referencedColumnName = "id")
-//    private List<Balance> balance;
-
-
-
+    @OneToOne(mappedBy = "account",cascade = CascadeType.ALL)
+    private User user;
     public Account() {
     }
 
-    public Account(long id, String password, String name, String email, String address) {
+    public Account(long id, String name, String email, String address) {
         this.id = id;
-        this.password = password;
         this.name = name;
         this.email = email;
         this.address = address;
@@ -48,14 +43,6 @@ public class Account {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {

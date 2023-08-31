@@ -1,7 +1,13 @@
 package com.redmath.assignment.bankingapplication.account;
 
+import com.redmath.assignment.bankingapplication.user.User;
+import com.redmath.assignment.bankingapplication.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,46 +18,26 @@ import java.util.Optional;
 @RequestMapping("api/v1/account")
 public class AccountController {
 
-    private final AccountService accountService;
+    @Autowired
+    private AccountService accountService;
 
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
-
-
-
-    //Get All accounts or with name or emial
     @GetMapping
-    public ResponseEntity<Map<String, List<Account>>> findAll(
-            @RequestParam(name = "search", required = false) String search) {
+    public ResponseEntity<Map<String, Optional<Account>>> findAll(Authentication authentication) {
 
-        List<Account> accounts;
-
-        if (search != null && !search.isEmpty()) {
-            accounts = accountService.findAllByNameOrEmail(search);
-        } else {
-            accounts = accountService.findAll();
-        }
-
-        if (accounts.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<Account> accounts=accountService.findById(authentication);
 
         return ResponseEntity.ok(Map.of("content", accounts));
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/all")
+    public ResponseEntity<Map<String, List<Account>>> all() {
 
-    //Get by email:
-    @GetMapping("/{email}")
-    public ResponseEntity<Optional<Account>> findAllByEmail(@PathVariable("email") String email) {
-        Optional<Account> account = accountService.findAllByEmail(email);
-        if (account == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(account);
+        List<Account> accounts=accountService.findAll();
+
+        return ResponseEntity.ok(Map.of("content", accounts));
     }
-
-
     //Post Mapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<Account> create(@RequestBody Account account) {
         Account created = accountService.create(account);
@@ -62,6 +48,7 @@ public class AccountController {
     }
 
     //PUT Mapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/edit")
     public ResponseEntity<Account> update(@RequestBody Account account) {
         Account updated = accountService.update(account);
@@ -72,6 +59,7 @@ public class AccountController {
     }
 
     //Delete Mapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         boolean deleted = accountService.delete(id);
@@ -80,9 +68,4 @@ public class AccountController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found or could not be deleted");
     }
-
-
-
-
-
 }

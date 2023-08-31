@@ -1,13 +1,15 @@
 package com.redmath.assignment.bankingapplication.transaction;
 
-import com.redmath.assignment.bankingapplication.Balance.Balance;
-import com.redmath.assignment.bankingapplication.Balance.BalanceRepository;
-import com.redmath.assignment.bankingapplication.Balance.BalanceService;
+import com.redmath.assignment.bankingapplication.balance.Balance;
+import com.redmath.assignment.bankingapplication.balance.BalanceService;
 import com.redmath.assignment.bankingapplication.account.AccountRepository;
+import com.redmath.assignment.bankingapplication.user.User;
+import com.redmath.assignment.bankingapplication.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,6 +25,8 @@ public class TransactionService {
     private  AccountRepository accountRepository;
     @Autowired
     private BalanceService balanceService;
+    @Autowired
+    private UserService userService;
     private  final Logger logger= LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -33,9 +37,16 @@ public class TransactionService {
 //        this.transactionRepository = transactionRepository;
 //        this.accountRepository=accountRepository;
 //    }
-    public List<Transaction> findAllTransactinos() {
+    public List<Transaction> findAllTransactinos(Authentication authentication) {
         logger.debug("Fetching all transactions");
-        return transactionRepository.findAll();
+        String username = authentication.getName();
+
+        // Retrieve the user object using the username
+        User user = userService.findByUsername(username);
+
+        // Get the account ID from the user object
+        Long accountId = user.getAccount().getId();
+        return transactionRepository.findByAccountId(accountId);
     }
 
     public List<Transaction> getTransactionsByAccountId(long accountId) {

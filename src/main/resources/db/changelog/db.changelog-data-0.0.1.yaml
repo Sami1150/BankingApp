@@ -10,9 +10,6 @@ databaseChangeLog:
                   name: id
                   value: '1'
               - column:
-                  name: password
-                  value: '{noop}password1'  # Using {noop} for plain text password
-              - column:
                   name: name
                   value: John Doe
               - column:
@@ -27,9 +24,6 @@ databaseChangeLog:
               - column:
                   name: id
                   value: '2'
-              - column:
-                  name: password
-                  value: '{noop}password2'
               - column:
                   name: name
                   value: Jane Smith
@@ -46,9 +40,6 @@ databaseChangeLog:
                   name: id
                   value: '3'
               - column:
-                  name: password
-                  value: '{noop}password3'
-              - column:
                   name: name
                   value: Michael Johnson
               - column:
@@ -64,9 +55,6 @@ databaseChangeLog:
                   name: id
                   value: '4'
               - column:
-                  name: password
-                  value: '{noop}password4'
-              - column:
                   name: name
                   value: Emily Brown
               - column:
@@ -81,9 +69,6 @@ databaseChangeLog:
               - column:
                   name: id
                   value: '5'
-              - column:
-                  name: password
-                  value: '{noop}password5'
               - column:
                   name: name
                   value: David Wilson

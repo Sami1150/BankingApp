@@ -12,9 +12,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: password
-                  type: varchar(255)
-              - column:
                   name: name
                   type: varchar(255)
               - column:

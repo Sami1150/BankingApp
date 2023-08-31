@@ -1,10 +1,15 @@
 package com.redmath.assignment.bankingapplication.account;
 
-import com.redmath.assignment.bankingapplication.Balance.Balance;
-import com.redmath.assignment.bankingapplication.Balance.BalanceRepository;
+import com.redmath.assignment.bankingapplication.balance.Balance;
+import com.redmath.assignment.bankingapplication.balance.BalanceRepository;
+import com.redmath.assignment.bankingapplication.balance.BalanceService;
+import com.redmath.assignment.bankingapplication.user.User;
+import com.redmath.assignment.bankingapplication.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -14,47 +19,49 @@ import java.util.Optional;
 
 @Service
 public class AccountService {
-    private final AccountRepository accountRepository;
-    private final BalanceRepository balanceRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private BalanceService balanceService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    //Constructor
-    public AccountService(AccountRepository accountRepository, BalanceRepository balanceRepository) {
-        this.accountRepository = accountRepository;
-        this.balanceRepository = balanceRepository;
-    }
 
     //Logger
     private  final Logger logger= LoggerFactory.getLogger(getClass());
 
 
-    public List<Account> findAll() {
+    public Optional findById(Authentication authentication) {
         logger.debug("Fetching all accounts");
+        String username = authentication.getName();
+
+        Optional account;
+
+        logger.debug("Fetching account with username {}", username );
+        if(username.equals("admin"))
+        {
+            List<Account> accounts = accountRepository.findAll();
+            return Optional.ofNullable(accounts.isEmpty() ? null : accounts);
+
+        }
+        else{
+
+            // Retrieve the user object using the username
+            User user = userService.findByUsername(username);
+
+            // Get the account ID from the user object
+            Long accountId = user.getAccount().getId();
+
+            // Retrieve the account details using the account ID
+            account = accountRepository.findById(accountId);
+            return account;
+        }
+    }
+    public List<Account> findAll() {
+        logger.info("All account details are: ");
         return accountRepository.findAll();
-    }
-
-    //Find by name or email
-    public List<Account> findAllByNameOrEmail(String search) {
-        logger.debug("Searching account with name or email containing: {}", search.replaceAll("[\r\n]",""));
-
-        return jdbcTemplate.query("SELECT * FROM account WHERE name LIKE '%' || ? || '%' OR email LIKE '%' || ? || '%'",
-                new Object[]{search, search},
-                (rs, rowNum) -> {
-                    Account account = new Account();
-                    account.setId(rs.getLong("id"));
-                    account.setPassword(rs.getString("password"));
-                    account.setName(rs.getString("name"));
-                    account.setEmail(rs.getString("email"));
-                    account.setAddress(rs.getString("address"));
-
-                    return account;
-                });
-    }
-    public Optional<Account> findAllByEmail(String email) {
-        logger.info("Account details with email {} is: ", email);
-        return accountRepository.findAllByEmail(email);
     }
 
     //Post Mapping
@@ -65,16 +72,10 @@ public class AccountService {
         // Save the account in the account table
         Account savedAccount = accountRepository.save(account);
 
-        // Create a new Balance entry with default values and associate it with the account
-        Balance defaultBalance = new Balance();
-        defaultBalance.setBalance_id(savedAccount.getId()+10);
-        defaultBalance.setDate(String.valueOf(LocalDate.now())); // Set current date
-        defaultBalance.setAmount(0.0); // Default amount
-        defaultBalance.setbalanceType("CR"); // Default balance type
-        defaultBalance.setAccount(account);
-        // Save the default balance entry in the balance table
-        balanceRepository.save(defaultBalance);
 
+        // Save the default balance and userService entry in the balance table
+        balanceService.defaultBalance(account);
+        userService.createUser(account);
         return savedAccount;
     }
 
@@ -89,8 +90,7 @@ public class AccountService {
 
             accountToUpdate.setId(newAccountData.getId());
             accountToUpdate.setName(newAccountData.getName());
-            accountToUpdate.setAddress(newAccountData.getPassword());
-            accountToUpdate.setPassword(newAccountData.getPassword());
+            accountToUpdate.setAddress(newAccountData.getAddress());
 
             return accountRepository.save(accountToUpdate);
         }

@@ -3,6 +3,7 @@ package com.redmath.assignment.bankingapplication.transaction;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,22 +20,9 @@ public class TransactionController {
 
     //GET Mapping
     @GetMapping
-    public ResponseEntity<Map<String, List<Transaction>>> findAll(
-            @RequestParam(name = "search", required = false) String search) {
+    public ResponseEntity<Map<String, List<Transaction>>> findAll(Authentication authentication) {
 
-        List<Transaction> transactions;
-
-        if (search != null && !search.isEmpty()) {
-//            balances = balanceService.findAllByAccountEmail(search);
-            transactions = transactionService.findAllTransactinos();
-
-        } else {
-            transactions = transactionService.findAllTransactinos();
-        }
-
-        if (transactions.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        List<Transaction> transactions=transactionService.findAllTransactinos(authentication);
 
         return ResponseEntity.ok(Map.of("content", transactions));
     }
