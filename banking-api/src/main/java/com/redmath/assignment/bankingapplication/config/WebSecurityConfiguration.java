@@ -10,21 +10,24 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @EnableMethodSecurity
 @Configuration
 public class WebSecurityConfiguration {
-        @Bean
+    @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 
 //        return web -> web.ignoring().requestMatchers(ignored).requestMatchers(HttpMethod.GET, ignoredGet);
@@ -34,7 +37,7 @@ public class WebSecurityConfiguration {
                 new AntPathRequestMatcher("/h2-console/**", "GET"), // Allow GET requests to h2-console
                 new AntPathRequestMatcher("/h2-console/**", "POST"),
                 new AntPathRequestMatcher("/actuator", "GET")
-                ,new AntPathRequestMatcher("/actuator/**","GET")
+                , new AntPathRequestMatcher("/actuator/**", "GET")
         );
     }
 
@@ -45,8 +48,11 @@ public class WebSecurityConfiguration {
           Form-based authentication is a common way to authenticate users by presenting them with a login form where they can enter their credentials.
 
          */
-//        http.formLogin(Customizer.withDefaults());
-        http.formLogin(formLogin -> formLogin.loginPage("http://localhost:3000"));
+
+
+        http.formLogin(formLogin -> Customizer.withDefaults());
+        http.formLogin(formLogin -> formLogin.defaultSuccessUrl("http://localhost:3000", true));
+
 
 //        http.exceptionHandling(config -> config.defaultAuthenticationEntryPointFor(
 //                (request, response, ex) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Not Authorized"),
@@ -57,43 +63,8 @@ public class WebSecurityConfiguration {
 
         http.authorizeHttpRequests(config -> config.anyRequest().authenticated());
 
-//        Disable CSRF
-//        http.csrf(csrf -> csrf.disable());
 
-
+        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
-//    @Bean
-//    public CorsWebFilter corsWebFilter(){
-//        UrlBasedCorsConfigurationSource source= new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.setAllowCredentials(true);
-//        corsConfiguration.addAllowedOriginPattern("*");
-//        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-//
-//
-//        corsConfiguration.addAllowedOrigin(CorsConfiguration.ALL);
-//        corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
-//        corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
-//        corsConfiguration.addAllowedHeader("Authorization");
-//        corsConfiguration.addAllowedHeader("Content-Type");
-//        corsConfiguration.addAllowedHeader("Accept");
-//        corsConfiguration.addAllowedMethod("POST");
-//        corsConfiguration.addAllowedMethod("GET");
-//        corsConfiguration.addAllowedMethod("DELETE");
-//        corsConfiguration.addAllowedMethod("PUT");
-//        corsConfiguration.addAllowedMethod("OPTIONS");
-//
-//        corsConfiguration.addAllowedMethod("*");
-//        corsConfiguration.addAllowedHeader("Requestor-Type");
-//        corsConfiguration.addExposedHeader("X-Get-Header");
-//
-//        corsConfiguration.setMaxAge(3600L);
-//
-//
-//        source.registerCorsConfiguration("/**",corsConfiguration);
-//
-//            return CorsWebFilter->CorsWebFilter(source);
-//    }
-
 }

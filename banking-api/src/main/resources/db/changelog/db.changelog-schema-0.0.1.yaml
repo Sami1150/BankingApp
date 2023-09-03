@@ -24,3 +24,11 @@ databaseChangeLog:
             tableName: account
             columnNames: id
             constraintName: account_pk
+        - addAutoIncrement:
+            tableName: account
+            columnName: id
+            startWith: 10
+            incrementBy: 1
+            columnDataType: bigint
+            generationType: ALWAYS
+            defaultOnNull: false

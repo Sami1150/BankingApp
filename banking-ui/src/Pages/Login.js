@@ -1,4 +1,7 @@
+import axios from "axios"
 import React, { useState } from 'react';
+
+axios.defaults.maxRedirects = 0;
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,11 +16,26 @@ const Login = () => {
       [name]: value,
     });
   };
-
+  const credentials = {
+    username: formData.username,
+    password: formData.password
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Username:', formData.username);
     console.log('Password:', formData.password);
+
+    axios.post("http://localhost:8080/login", credentials, { headers: {
+      'Access-Control-Allow-Origin': '*', 
+      'Access-Control-Allow-Methods': 'POST, PATCH, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+    'Access-Control-Allow-Credentials': true}},
+    {withCredentials: true},
+    {crossorigin: true})
+      .then(response => {
+        console.log(response.status,response.json);
+        // Handle response
+      })
   };
 
   return (

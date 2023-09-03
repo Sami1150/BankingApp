@@ -16,10 +16,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService, ApplicationListener<AbstractAuthenticationEvent> {
-
+public class UserService implements UserDetailsService, ApplicationListener<AbstractAuthenticationEvent>
+{
     public static final String STATUS_ACTIVE = "ACTIVE";
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -83,6 +84,20 @@ public class UserService implements UserDetailsService, ApplicationListener<Abst
         } catch (Exception e) {
             // Handle exceptions here
            throw e;
+        }
+    }
+    public String login(String username, String password)
+    {
+        password="{noop}"+password;
+        User user=repository.findByUserName(username);
+        Optional<User> userOptional = Optional.of(repository.findByUserName(username));
+        logger.debug(username,password);
+        if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+            // Password matches, so login is successful.
+            return "Login Successful";
+        } else {
+            // Password does not match.
+            return "Login Failed: Incorrect Password";
         }
     }
 

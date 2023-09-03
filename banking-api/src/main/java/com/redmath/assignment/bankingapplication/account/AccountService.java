@@ -61,10 +61,14 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+    public Account findByEmail(String email){
+        logger.debug("Fetching Account By Email");
+        return accountRepository.findAllByEmail(email);
+    }
     //Post Mapping
     public Account create(Account account) {
 
-        logger.info("Account with email {} is added. ", account.getEmail());
+        logger.info("Account with email {} is added. ", account.getId());
 
         // Save the account in the account table
         Account savedAccount = accountRepository.save(account);

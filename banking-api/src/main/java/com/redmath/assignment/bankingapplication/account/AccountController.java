@@ -1,5 +1,7 @@
 package com.redmath.assignment.bankingapplication.account;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/account")
-@CrossOrigin(value = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000",methods = {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE,RequestMethod.PUT})  // <- use your url of frontend
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
+    private  final Logger logger= LoggerFactory.getLogger(getClass());
 
     @GetMapping
     public ResponseEntity<Map<String, Optional<Account>>> findAll(Authentication authentication) {
@@ -38,9 +41,10 @@ public class AccountController {
         return ResponseEntity.ok(Map.of("content", accounts));
     }
     //Post Mapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<Account> create(@RequestBody Account account) {
+        logger.debug("Add ew account");
         Account created = accountService.create(account);
         if (created ==null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -63,6 +67,7 @@ public class AccountController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
+        logger.debug("Delete Mapping");
         boolean deleted = accountService.delete(id);
         if (deleted) {
             return ResponseEntity.ok("Resource deleted successfully");

@@ -1,5 +1,7 @@
 package com.redmath.assignment.bankingapplication.transaction;
 
+import com.redmath.assignment.bankingapplication.account.Account;
+import com.redmath.assignment.bankingapplication.account.AccountService;
 import com.redmath.assignment.bankingapplication.balance.Balance;
 import com.redmath.assignment.bankingapplication.balance.BalanceService;
 import com.redmath.assignment.bankingapplication.account.AccountRepository;
@@ -9,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+//import org.springframework.security.core.Authentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +34,8 @@ public class TransactionService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Transaction> findAllTransactions(Authentication authentication) {
+    public List<Transaction> findAllTransactions(Authentication authentication)
+    {
         logger.debug("Fetching all transactions");
         String username = authentication.getName();
 
@@ -54,11 +58,26 @@ public class TransactionService {
     }
 
 
-    public Transaction addFunds(long accountId, double amount) {
+    public Transaction addFunds(Authentication authentication, double amount) {
+        String username = authentication.getName();
+
+        // Retrieve the user object using the username
+        User user = userService.findByUsername(username);
+
+        // Get the account ID from the user object
+        Long accountId = user.getAccount().getId();
+
         return performTransaction(accountId, amount, "Credit Transaction", "CR");
     }
 
-    public Transaction withdrawFunds(long accountId, double amount) {
+    public Transaction withdrawFunds(Authentication authentication, double amount) {
+        String username = authentication.getName();
+
+        // Retrieve the user object using the username
+        User user = userService.findByUsername(username);
+
+        // Get the account ID from the user object
+        Long accountId = user.getAccount().getId();
         return performTransaction(accountId, amount, "Debit Transaction", "DB");
     }
 
@@ -91,6 +110,35 @@ public class TransactionService {
         newTransaction.setDescription(description);
         return newTransaction;
     }
+
+    public Transaction transferFunds(Authentication authentication, double amount, String receiverEmail) {
+        String username = authentication.getName();
+
+        // Retrieve the user object using the username
+        User user = userService.findByUsername(username);
+
+        // Get the account ID from the user object
+        Long senderAccountId = user.getAccount().getId();
+
+        // Retrieve the sender and receiver user objects using their usernames
+        Account AccountOfReceiver = accountRepository.findAllByEmail(receiverEmail);
+
+        // Get the account IDs of the sender and receiver
+        Long receiverAccountId = AccountOfReceiver.getId();
+        logger.debug("Account Id of sender is {} and receiver is } :", senderAccountId,receiverAccountId);
+        // Deduct funds from the sender's account
+        Transaction senderTransaction = performTransaction(senderAccountId, amount, "Debit Transaction", "DB");
+
+        // Add funds to the receiver's account
+        Transaction receiverTransaction = performTransaction(receiverAccountId, amount, "Credit Transaction", "CR");
+
+        // Save both transactions to the database
+        create(senderTransaction);
+        create(receiverTransaction);
+
+        return senderTransaction; // You can return any of the transactions as needed
+    }
+
 
     // Put Mapping
 //    public Transaction update(Transaction newTransactionData) {

@@ -48,3 +48,11 @@ databaseChangeLog:
             referencedTableName: account
             referencedColumnNames: id
             constraintName: fk_users_account
+        - addAutoIncrement:
+            tableName: users
+            columnName: id
+            startWith: 200
+            incrementBy: 1
+            columnDataType: bigint
+            generationType: ALWAYS
+            defaultOnNull: false

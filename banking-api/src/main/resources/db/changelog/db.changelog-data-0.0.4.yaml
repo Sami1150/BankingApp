@@ -77,7 +77,7 @@ databaseChangeLog:
                   value: 'ACTIVE'
               - column:
                   name: login_attempts
-                  value: '3'
+                  value: '2'
               - column:
                   name: login_at
                   value: '2023-07-03 12:00:00'

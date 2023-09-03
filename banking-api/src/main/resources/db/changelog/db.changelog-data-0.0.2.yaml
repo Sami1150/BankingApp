@@ -93,3 +93,39 @@ databaseChangeLog:
               - column:
                   name: account_id
                   value: '2'
+        - insert:
+            tableName: balance
+            columns:
+              - column:
+                  name: balance_id
+                  value: '6'
+              - column:
+                  name: date
+                  value: '2020-07-30'
+              - column:
+                  name: amount
+                  value: '100.00'
+              - column:
+                  name: balance_type
+                  value: 'CR'
+              - column:
+                  name: account_id
+                  value: '4'
+        - insert:
+            tableName: balance
+            columns:
+              - column:
+                  name: balance_id
+                  value: '7'
+              - column:
+                  name: date
+                  value: '2020-07-31'
+              - column:
+                  name: amount
+                  value: '230.00'
+              - column:
+                  name: balance_type
+                  value: 'CR'
+              - column:
+                  name: account_id
+                  value: '5'
