@@ -101,4 +101,9 @@ public class UserService implements UserDetailsService, ApplicationListener<Abst
         }
     }
 
+    public String getRole(String username) {
+        User user=repository.findByUserName(username);
+        logger.debug("Role is: {}",user.getRoles());
+        return user.getRoles();
+    }
 }

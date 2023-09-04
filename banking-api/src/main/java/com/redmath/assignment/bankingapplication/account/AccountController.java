@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.cors.CorsConfiguration;
 
-import java.security.AllPermission;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -44,7 +41,7 @@ public class AccountController {
 //    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<Account> create(@RequestBody Account account) {
-        logger.debug("Add ew account");
+        logger.debug("Add new account");
         Account created = accountService.create(account);
         if (created ==null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -53,7 +50,7 @@ public class AccountController {
     }
 
     //PUT Mapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/edit")
     public ResponseEntity<Account> update(@RequestBody Account account) {
         Account updated = accountService.update(account);
@@ -64,7 +61,7 @@ public class AccountController {
     }
 
     //Delete Mapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         logger.debug("Delete Mapping");
