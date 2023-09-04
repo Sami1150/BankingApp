@@ -22,8 +22,6 @@ public class Transaction {
     @JoinColumn(name = "account_id")
     private Account account;
 
-//    @Transient
-//    private Long accountId; // New field for accountId
 
     public Transaction() {
     }

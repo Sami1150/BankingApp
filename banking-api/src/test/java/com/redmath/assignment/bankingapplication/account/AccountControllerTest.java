@@ -31,22 +31,20 @@ public class AccountControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user1", authorities = "USER")
     public void testUser1FindAll() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/account")
-                        .with(testUser("user1", "USER"))
-                        .contentType("application/json")
-                        .content("{\"content\":{\"id\":1,\"name\":\"John Doe\",\"email\":\"john@example.com\",\"address\":\"123 Main St\"}}"))
-                .andDo(MockMvcResultHandlers.print())
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andReturn();
     }
+
     @Test
+    @WithMockUser(username = "admin", authorities = "ADMIN")
     public void testAdminFindAll() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/account")
-                        .with(testUser("admin", "ADMIN"))
-                        .contentType("application/json")
-                        .content("{\"content\":[{\"id\":1,\"name\":\"John Doe\",\"email\":\"john@example.com\",\"address\":\"123 Main St\"},{\"id\":2,\"name\":\"Jane Smith\",\"email\":\"jane@example.com\",\"address\":\"456 Oak Ave\"},{\"id\":3,\"name\":\"Michael Johnson\",\"email\":\"michael@example.com\",\"address\":\"789 Elm Rd\"},{\"id\":4,\"name\":\"Emily Brown\",\"email\":\"emily@example.com\",\"address\":\"567 Pine Ln\"},{\"id\":5,\"name\":\"David Wilson\",\"email\":\"david@example.com\",\"address\":\"789 Maple Ave\"}]}"))
-                .andDo(MockMvcResultHandlers.print())
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andReturn();
     }

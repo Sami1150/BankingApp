@@ -152,7 +152,7 @@ databaseChangeLog:
                   value: '{noop}admin'
               - column:
                   name: roles
-                  value: 'ADMIN'
+                  value: 'ROLE_ADMIN'
               - column:
                   name: status
                   value: 'ACTIVE'

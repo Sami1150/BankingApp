@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService, ApplicationListener<AbstractAuthenticationEvent>
@@ -90,7 +89,6 @@ public class UserService implements UserDetailsService, ApplicationListener<Abst
     {
         password="{noop}"+password;
         User user=repository.findByUserName(username);
-        Optional<User> userOptional = Optional.of(repository.findByUserName(username));
         logger.debug(username,password);
         if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
             // Password matches, so login is successful.
@@ -101,4 +99,9 @@ public class UserService implements UserDetailsService, ApplicationListener<Abst
         }
     }
 
+    public String getRole(String username) {
+        User user=repository.findByUserName(username);
+        logger.debug("Role is: {}",user.getRoles());
+        return user.getRoles();
+    }
 }

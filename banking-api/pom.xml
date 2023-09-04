@@ -55,7 +55,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.2.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -65,100 +69,65 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 <!--			Check Style Plugin-->
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-checkstyle-plugin</artifactId>-->
-<!--				<version>3.3.0</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>default-cli</id>-->
-<!--						<goals>-->
-<!--							<goal>check</goal>-->
-<!--						</goals>-->
-<!--						<phase>validate</phase>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--				<configuration>-->
-<!--					<configLocation>google_checks.xml</configLocation>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<configLocation>google_checks.xml</configLocation>
+				</configuration>
+			</plugin>
 <!--&lt;!&ndash;PMD Version&ndash;&gt;-->
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-pmd-plugin</artifactId>-->
-<!--				<version>3.21.0</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>default-cli</id>-->
-<!--						<goals>-->
-<!--							<goal>check</goal>-->
-<!--						</goals>-->
-<!--						<phase>validate</phase>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.21.0</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+			</plugin>
 <!--&lt;!&ndash;Spotbugs version&ndash;&gt;-->
-<!--			<plugin>-->
-<!--				<groupId>com.github.spotbugs</groupId>-->
-<!--				<artifactId>spotbugs-maven-plugin</artifactId>-->
-<!--				<version>4.7.3.2</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>default-cli</id>-->
-<!--						<goals>-->
-<!--							<goal>check</goal>-->
-<!--						</goals>-->
-<!--						<phase>verify</phase>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--				<configuration>-->
-<!--					<effort>Max</effort>-->
-<!--					<threshold>Normal</threshold>-->
-<!--					<failOnError>true</failOnError>-->
-<!--					<plugins>-->
-<!--						<plugin>-->
-<!--							<groupId>com.h3xstream.findsecbugs</groupId>-->
-<!--							<artifactId>findsecbugs-plugin</artifactId>-->
-<!--							<version>LATEST</version>-->
-<!--						</plugin>-->
-<!--					</plugins>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
-
-<!--			For front end-->
-<!--			<plugin>-->
-<!--				<groupId>com.github.eirslett</groupId>-->
-<!--				<artifactId>frontend-maven-plugin</artifactId>-->
-<!--				<version>1.6</version>-->
-<!--				<configuration>-->
-<!--					<nodeVersion>v8.11.3</nodeVersion>-->
-<!--					<npmVersion>6.1.0</npmVersion>-->
-<!--					<workingDirectory>src/main/webapp/WEB-INF/view/react</workingDirectory>-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>install node and npm</id>-->
-<!--						<goals>-->
-<!--							<goal>install-node-and-npm</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--					<execution>-->
-<!--						<id>npm install</id>-->
-<!--						<goals>-->
-<!--							<goal>npm</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--					<execution>-->
-<!--						<id>npm run build</id>-->
-<!--						<goals>-->
-<!--							<goal>npm</goal>-->
-<!--						</goals>-->
-<!--						<configuration>-->
-<!--							<arguments>run build</arguments>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>4.7.3.2</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<effort>Max</effort>
+					<threshold>Normal</threshold>
+					<failOnError>true</failOnError>
+					<plugins>
+						<plugin>
+							<groupId>com.h3xstream.findsecbugs</groupId>
+							<artifactId>findsecbugs-plugin</artifactId>
+							<version>LATEST</version>
+						</plugin>
+					</plugins>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

@@ -69,7 +69,7 @@ const TransactionTable = ({ transactions }) => {
   }
 };
 
-const App = () => {
+const TransactionHistory = () => {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
@@ -98,4 +98,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TransactionHistory;

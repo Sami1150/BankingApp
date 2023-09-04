@@ -65,7 +65,7 @@ const BalanceHistoryTable = ({ balanceHistory }) => {
   }
 };
 
-const App = () => {
+const BalanceHistory = () => {
   const [balanceHistory, setBalanceHistory] = useState([]);
 
   useEffect(() => {
@@ -93,4 +93,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default BalanceHistory;

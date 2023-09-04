@@ -56,7 +56,7 @@ const AccountTable = ({ accounts, onDelete, onEdit }) => {
 };
 
 
-const App = () => {
+const ViewAccounts = () => {
   const [accounts, setAccounts] = useState([]);
   const [editingAccount, setEditingAccount] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -150,4 +150,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default ViewAccounts;

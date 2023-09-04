@@ -14,12 +14,16 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +46,7 @@ public class TransactionControllerTest {
         mockTransactions.add(new Transaction(1L, String.valueOf(LocalDate.parse("2023-07-01")), 100.0, "CR", "Credit transaction", new Account()));
         mockTransactions.add(new Transaction(2L, String.valueOf(LocalDate.parse("2023-07-02")), 50.0, "CR", "Credit transaction", new Account()));
 
-        Mockito.when(transactionService.findAllTransactions(Mockito.any(Authentication.class)))//findAllTransactions(Mockito.any(Authentication.class)))
+        when(transactionService.findAllTransactions(any(Authentication.class)))//findAllTransactions(Mockito.any(Authentication.class)))
                 .thenReturn(mockTransactions);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/transaction")
@@ -66,7 +70,7 @@ public class TransactionControllerTest {
     public void testCreateTransaction() throws Exception {
         Transaction mockTransaction = new Transaction(1L, String.valueOf(LocalDate.parse("2023-07-01")), 100.0, "CR", "Credit transaction", new Account());
 
-        Mockito.when(transactionService.create(Mockito.any(Transaction.class)))
+        when(transactionService.create(any(Transaction.class)))
                 .thenReturn(mockTransaction);
 
         String requestBody = "{\n" +
@@ -104,11 +108,10 @@ public class TransactionControllerTest {
         mockTransaction.setAmount(1000.0);
         mockTransaction.setTransactionType("CR");
 
-        Mockito.when(transactionService.addFunds(Mockito.anyLong(), Mockito.anyDouble()))
+        when(transactionService.addFunds(any(Authentication.class), Mockito.anyDouble()))
                 .thenReturn(mockTransaction);
 
         mockMvc.perform(post("/api/v1/transaction/addfunds")
-                        .param("accountId", "3")
                         .param("amount", "1000.0")
                         .with(SecurityMockMvcRequestPostProcessors.csrf())
                 )
@@ -121,7 +124,6 @@ public class TransactionControllerTest {
     @Test
     @WithMockUser(username = "user1", authorities = "USER")
     public void testWithdrawFunds() throws Exception {
-        long accountId = 3L;
         double amount = 150.0;
         String currentDate = LocalDate.now().toString();
 
@@ -132,19 +134,54 @@ public class TransactionControllerTest {
         newTransaction.setTransactionType("DB");
         newTransaction.setDescription("Debit Transaction");
 
-        Mockito.when(transactionService.withdrawFunds(Mockito.anyLong(), Mockito.anyDouble()))
+        when(transactionService.withdrawFunds(any(Authentication.class), Mockito.anyDouble()))
                 .thenReturn(newTransaction);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/transaction/withdrawfunds")
-                        .param("accountId", String.valueOf(accountId))
                         .param("amount", String.valueOf(amount))
-                        .contentType("application/json")
-                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.date", Matchers.is(currentDate)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.amount", Matchers.is(amount)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.transactionType", Matchers.is("DB")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", Matchers.is("Debit Transaction")));
+    }
+    @Test
+    @WithMockUser(username = "user1", authorities = "USER")
+    public void testTransferFunds() throws Exception {
+        // Define a test email for the receiver
+        String receiverEmail = "receiver@example.com";
+
+        // Create a mock sender transaction (you can customize this as needed)
+        Transaction mockSenderTransaction = new Transaction();
+        mockSenderTransaction.setTransaction_id(1L);
+        mockSenderTransaction.setDate("2023-07-10");
+        mockSenderTransaction.setAmount(500.0);
+        mockSenderTransaction.setTransactionType("DB");
+
+        // Create a mock receiver transaction (you can customize this as needed)
+        Transaction mockReceiverTransaction = new Transaction();
+        mockReceiverTransaction.setTransaction_id(2L);
+        mockReceiverTransaction.setDate("2023-07-11");
+        mockReceiverTransaction.setAmount(500.0);
+        mockReceiverTransaction.setTransactionType("CR");
+
+        // Mock the transactionService to return the sender transaction
+        when(transactionService.transferFunds(any(Authentication.class), any(Double.class), any(String.class)))
+                .thenReturn(mockSenderTransaction);
+
+        // Perform the POST request to the /api/v1/transaction/transferfunds endpoint
+        mockMvc.perform(post("/api/v1/transaction/transferfunds")
+                        .param("amount", "500.0")
+                        .param("email", receiverEmail)
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.transaction_id").value(1L)) // Adjust the expected values accordingly
+                .andExpect(jsonPath("$.date").value("2023-07-10"))
+                .andExpect(jsonPath("$.amount").value(500.0))
+                .andExpect(jsonPath("$.transactionType").value("DB"));
+
     }
 
 }

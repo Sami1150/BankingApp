@@ -49,14 +49,6 @@ public class BalanceService {
         return balanceRepository.findTopByAccountIdOrderByDateDesc(accountId);
     }
 
-//    public List<Balance> getBalancesByAccountId(long accountId) {
-//        // Fetch all transactions for the given account ID
-//        return balanceRepository.findByAccountId(accountId);
-//    }
-//    public Optional<Balance> findByAccountId(long accountId) {
-//        logger.info("Balance details with account ID {} are: ", accountId);
-//        return balanceRepository.findById()  //.findById(accountId);
-//    }
 
     // Post Mapping
     public Balance create(Balance balance) {
@@ -84,18 +76,6 @@ public class BalanceService {
 
         return null;
     }
-//
-//    // Delete Mapping
-//    public boolean delete(long accountId) {
-//        Optional<Balance> balanceToDelete = balanceRepository.findById(accountId);
-//
-//        if (balanceToDelete.isPresent()) {
-//            balanceRepository.delete(balanceToDelete.get());
-//            return true;
-//        }
-//
-//        return false; // Balance with given account ID not found
-//    }
 
     public boolean defaultBalance(Account account) {
         try {
@@ -107,7 +87,6 @@ public class BalanceService {
             balanceRepository.save(defaultBalance);
             return true;
         } catch (Exception e) {
-            // Handle exceptions here
             throw e;
         }
     }
@@ -118,5 +97,25 @@ public class BalanceService {
         newBalance.setAmount(updatedBalance);
         newBalance.setbalanceType(balanceType);
         balanceRepository.save(newBalance);
+    }
+
+    public double getBalance(Authentication authentication) {
+        String username = authentication.getName();
+
+        // Retrieve the user object using the username
+        User user = userService.findByUsername(username);
+
+        // Get the account ID from the user object
+        Long accountId = user.getAccount().getId();
+        balanceRepository.findByAccountId(accountId);
+        // Retrieve all balances for the user's account, sorted by date in descending order
+        List<Balance> balances = balanceRepository.findByAccountIdOrderByDateDesc(accountId);
+
+        // Get the latest balance (the first balance in the sorted list)
+        Optional<Balance> latestBalance = balances.stream().findFirst();
+
+        double latestBal=latestBalance.get().getAmount();
+        // If a latest balance is found, return its value; otherwise, return 0.0 (or another default value)
+        return latestBal;//.orElse(0.0);
     }
 }
