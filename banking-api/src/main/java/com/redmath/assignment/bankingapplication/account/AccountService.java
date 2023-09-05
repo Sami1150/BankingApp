@@ -61,7 +61,7 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Account findByEmail(String email){
+    public Optional<Account> findByEmail(String email){
         logger.debug("Fetching Account By Email");
         return accountRepository.findAllByEmail(email);
     }

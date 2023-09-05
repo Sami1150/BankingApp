@@ -39,18 +39,15 @@ const TransactionForm = () => {
         });
       } else {
         // Show an error toast notification
-        toast.error('Transaction failed. Please try again.', {
+        toast.error('Transaction failed. Funds not available.', {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
-
-      console.log('Transaction successful:', response.data);
     } catch (error) {
       // Handle errors and show an error toast notification
-      toast.error('Error making transaction. Please try again.', {
+      toast.error('Transaction failed. Funds not available.', {
         position: toast.POSITION.TOP_RIGHT,
       });
-      console.error('Error making transaction:', error);
     }
   };
 

@@ -17,10 +17,6 @@ import ViewUserAccountDetails from '../Account/ViewUserAccountDetails';
 import BalanceHistory from '../Balance/BalanceHistory';
 
 const UserNavbar = () => {
-  const handleLogout = () => {
-    // Redirect to Google.com when Logout is pressed
-    window.location.href = 'http://localhost:8080/logout';
-  };
   return (
     <div className="App">
       <Router>
@@ -72,9 +68,9 @@ const UserNavbar = () => {
                 </li>
 
                 <li className="nav-item">
-                <button className="nav-link" onClick={handleLogout}>
-              Logout
-            </button>
+                  <Link className="nav-link" to="http://localhost:8080/logout">
+                    Logout
+                  </Link>
                 </li>
               </ul>
             </div>

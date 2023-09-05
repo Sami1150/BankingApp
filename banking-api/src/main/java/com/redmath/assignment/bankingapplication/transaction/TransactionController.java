@@ -1,8 +1,10 @@
 package com.redmath.assignment.bankingapplication.transaction;
 
 
+import com.redmath.assignment.bankingapplication.balance.BalanceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,6 +23,8 @@ public class TransactionController {
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
+    @Autowired
+    public BalanceService balanceService;
 
     //GET Mapping
     @GetMapping
@@ -59,17 +63,32 @@ public class TransactionController {
                                                      @RequestParam double amount) {
         logger.debug("This is my withdraw function in controller");
 
+        double balance=balanceService.getBalance(authentication)-amount;
+        logger.debug("Balance is: {}",balance);
+        if(balance<0){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else if (balance>=0){
         Transaction newTransaction = transactionService.withdrawFunds(authentication, amount);
         return ResponseEntity.ok(newTransaction);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
     }
     @PostMapping("/transferfunds")
-    public ResponseEntity<Transaction> transferFunds(Authentication authentication,
+    public ResponseEntity<Boolean> transferFunds(Authentication authentication,
                                                      @RequestParam double amount,
                                                      @RequestParam String email)
     {
         logger.debug("Transfer funds in Controller");
-        Transaction newTransaction = transactionService.transferFunds(authentication, amount,email);
+        Boolean newTransaction = transactionService.transferFunds(authentication, amount,email);
+        if (newTransaction)
+        {
         return ResponseEntity.ok(newTransaction);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 }
