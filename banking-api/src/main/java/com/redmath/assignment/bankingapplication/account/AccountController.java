@@ -40,9 +40,9 @@ public class AccountController {
     //Post Mapping
 //    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/add")
-    public ResponseEntity<Account> create(@RequestBody Account account) {
+    public ResponseEntity<Account> create(@RequestBody Account account, @RequestParam String password) {
         logger.debug("Add new account");
-        Account created = accountService.create(account);
+        Account created = accountService.create(account,password);
         if (created ==null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }

@@ -10,7 +10,6 @@ import {
 } from 'react-router-dom';
 
 import ViewAccounts from '../Account/ViewAccounts';
-import LogoutButton from '../Pages/Logout';
 import TransactionForm from '../Transaction/TransactionForm';
 import TransferFunds from '../Transaction/TransferFunds';
 import TransactionHistory from '../Transaction/TransactionHistory';
@@ -18,6 +17,10 @@ import ViewUserAccountDetails from '../Account/ViewUserAccountDetails';
 import BalanceHistory from '../Balance/BalanceHistory';
 
 const UserNavbar = () => {
+  const handleLogout = () => {
+    // Redirect to Google.com when Logout is pressed
+    window.location.href = 'http://localhost:8080/logout';
+  };
   return (
     <div className="App">
       <Router>
@@ -69,9 +72,9 @@ const UserNavbar = () => {
                 </li>
 
                 <li className="nav-item">
-                  <Link className="nav-link" to="/Logout">
-                    Logout
-                  </Link>
+                <button className="nav-link" onClick={handleLogout}>
+              Logout
+            </button>
                 </li>
               </ul>
             </div>
@@ -87,7 +90,7 @@ const UserNavbar = () => {
           />
           <Route path="/TransactionForm" element={<TransactionForm />} />
           <Route path="/TransferFunds" element={<TransferFunds />} />
-          <Route path="/Logout" element={<LogoutButton />} />
+          <Route path="/Logout" />
           <Route path="/ViewAccounts" element={<ViewAccounts />} />
         </Routes>
       </Router>
@@ -96,6 +99,9 @@ const UserNavbar = () => {
 };
 
 const AdminNavbar = () => {
+  const handleLogout = () => {
+    window.location.href = 'http://localhost:8080/logout';
+  };
   return (
     <div className="App">
       <Router>
@@ -126,9 +132,9 @@ const AdminNavbar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/Logout">
-                    Logout
-                  </Link>
+                <button className="nav-link" onClick={handleLogout}>
+              Logout
+            </button>
                 </li>
               </ul>
             </div>
@@ -137,7 +143,7 @@ const AdminNavbar = () => {
 
         <Routes>
           <Route path="/" element={<ViewAccounts />} />
-          <Route path="/Logout" element={<LogoutButton />} />
+          <Route path="/Logout" />
         </Routes>
       </Router>
     </div>

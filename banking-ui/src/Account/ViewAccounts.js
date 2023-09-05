@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AiTwotoneDelete, AiTwotoneEdit } from 'react-icons/ai';
 import AddAccountForm from '../Account/AddAccountForm';
 import EditAccountForm from '../Account/EditAccountForm';
@@ -17,14 +19,24 @@ const AccountTable = ({ accounts, onDelete, onEdit }) => {
 
       // Call the onDelete function to remove the deleted account from the UI
       onDelete(id);
+
+      // Show a success toast notification
+      toast.success('Account deleted successfully!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } catch (error) {
+      // Show an error toast notification
+      toast.error('Error deleting account. Please try again.', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+
       console.error('Error deleting account:', error);
     }
   };
 
   return (
-    <table className="table table-striped">
-      <thead>
+    <table className="table table-striped shadow">
+      <thead className='thead-dark'>
         <tr>
           <th>ID</th>
           <th>Name</th>
@@ -55,13 +67,11 @@ const AccountTable = ({ accounts, onDelete, onEdit }) => {
   );
 };
 
-
 const ViewAccounts = () => {
   const [accounts, setAccounts] = useState([]);
   const [editingAccount, setEditingAccount] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false); // Add this state
-
 
   useEffect(() => {
     loadAccounts();
@@ -87,6 +97,7 @@ const ViewAccounts = () => {
       prevAccounts.filter((account) => account.id !== id)
     );
   };
+
   const handleAddNewAccount = () => {
     // Show the add account form when the button is clicked
     setShowAddForm(true);
@@ -96,6 +107,11 @@ const ViewAccounts = () => {
   const handleAddAccount = (newAccount) => {
     setAccounts([...accounts, newAccount]);
     setShowAddForm(false); // Hide the add account form
+
+    // Show a success toast notification
+    toast.success('Account added successfully!', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   const handleEditAccount = (account) => {
@@ -111,6 +127,11 @@ const ViewAccounts = () => {
         account.id === editedAccount.id ? editedAccount : account
       )
     );
+
+    // Show a success toast notification
+    toast.success('Account updated successfully!', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   const handleCloseEditForm = () => {
@@ -146,6 +167,7 @@ const ViewAccounts = () => {
         onDelete={handleDeleteAccount}
         onEdit={handleEditAccount}
       />
+      <ToastContainer />
     </div>
   );
 };

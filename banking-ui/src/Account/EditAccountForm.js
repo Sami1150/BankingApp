@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditAccountForm = ({ account, onSave, onClose }) => {
   const [editedAccount, setEditedAccount] = useState({ ...account });
@@ -25,9 +27,19 @@ const EditAccountForm = ({ account, onSave, onClose }) => {
       // Call the onSave function to update the account information in the parent component
       onSave(editedAccount);
 
+      // Show a success toast notification
+      toast.success('Account updated successfully!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+
       // Close the edit form
       onClose();
     } catch (error) {
+      // Show an error toast notification
+      toast.error('Error updating account. Please try again.', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+
       console.error('Error updating account:', error);
     }
   };
@@ -90,6 +102,7 @@ const EditAccountForm = ({ account, onSave, onClose }) => {
           Cancel
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

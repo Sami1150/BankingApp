@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TransactionForm = () => {
   const [amount, setAmount] = useState(0);
@@ -17,25 +19,37 @@ const TransactionForm = () => {
     event.preventDefault();
 
     try {
-      // Make a POST request based on the selected transaction type
       const response = await axios.post(
-        `/api/v1/transaction/${transactionType}`,null,
+        `/api/v1/transaction/${transactionType}`,
+        null,
         {
-          params: {amount:parseFloat(amount)} // Convert amount to a number
-        },
-        {
+          params: { amount: parseFloat(amount) },
           withCredentials: true,
           headers: {
-            'Content-Type': 'application/json', // Add this line
-            'Authorization': 'Basic ' + btoa('admin:admin'), // Add your authorization headers here
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic ' + btoa('admin:admin'),
           },
         }
       );
 
-      // Handle the response, you can show a success message or redirect as needed
+      if (response.status === 200) {
+        // Show a success toast notification
+        toast.success('Transaction successful!', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } else {
+        // Show an error toast notification
+        toast.error('Transaction failed. Please try again.', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+
       console.log('Transaction successful:', response.data);
     } catch (error) {
-      // Handle errors, you can show an error message to the user
+      // Handle errors and show an error toast notification
+      toast.error('Error making transaction. Please try again.', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.error('Error making transaction:', error);
     }
   };
@@ -85,8 +99,9 @@ const TransactionForm = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
 
-  export default TransactionForm;
+export default TransactionForm;

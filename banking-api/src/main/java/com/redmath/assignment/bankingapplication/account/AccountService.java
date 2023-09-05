@@ -66,7 +66,7 @@ public class AccountService {
         return accountRepository.findAllByEmail(email);
     }
     //Post Mapping
-    public Account create(Account account) {
+    public Account create(Account account,String password) {
 
         logger.info("Account with email {} is added. ", account.getId());
 
@@ -76,7 +76,7 @@ public class AccountService {
 
         // Save the default balance and userService entry in the balance table
         balanceService.defaultBalance(account);
-        userService.createUser(account);
+        userService.createUser(account, password);
         return savedAccount;
     }
 

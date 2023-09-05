@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TransferFunds = () => {
   const [email, setEmail] = useState('');
@@ -17,13 +19,12 @@ const TransferFunds = () => {
     event.preventDefault();
 
     try {
-      // Make a POST request to transfer funds
       const response = await axios.post(
         '/api/v1/transaction/transferfunds',
         null,
         {
           params: {
-            amount: parseFloat(amount), // Convert amount to a number
+            amount: parseFloat(amount),
             email: email,
           },
           withCredentials: true,
@@ -34,10 +35,24 @@ const TransferFunds = () => {
         }
       );
 
-      // Handle the response, you can show a success message or redirect as needed
+      if (response.status === 200) {
+        // Show a success toast notification
+        toast.success('Transaction successful!', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } else {
+        // Show an error toast notification
+        toast.error('Transaction failed. Please try again.', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+
       console.log('Transaction successful:', response.data);
     } catch (error) {
-      // Handle errors, you can show an error message to the user
+      // Handle errors and show an error toast notification
+      toast.error('Error making transaction. Please try again.', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       console.error('Error making transaction:', error);
     }
   };
@@ -86,6 +101,7 @@ const TransferFunds = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

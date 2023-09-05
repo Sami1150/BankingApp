@@ -68,11 +68,11 @@ public class UserService implements UserDetailsService, ApplicationListener<Abst
         return repository.findByUserName(username);
 
     }
-    public boolean createUser(Account account) {
+    public boolean createUser(Account account, String password) {
         try {
             User newUser = new User();
             newUser.setUserName(account.getEmail()); // Use email as username
-            newUser.setPassword("user"); // Set default password temporarily
+            newUser.setPassword("{noop}"+password); // Set default password temporarily
             newUser.setRoles("ROLE_USER"); // Default role
             newUser.setStatus("ACTIVE"); // Default status
             newUser.setLoginAttempts(0); // Default login attempts
