@@ -85,7 +85,13 @@ const ViewAccounts = () => {
           'Authorization': 'Basic ' + btoa('admin:admin'),
         },
       });
-      setAccounts(response.data.content);
+
+      // Filter out the "admin" account from the response data
+      const filteredAccounts = response.data.content.filter(
+        (account) => account.name !== 'admin'
+      );
+
+      setAccounts(filteredAccounts);
     } catch (error) {
       console.error('Error loading accounts:', error);
     }

@@ -29,7 +29,7 @@ public class AccountController {
 
         return ResponseEntity.ok(Map.of("content", accounts));
     }
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<Map<String, List<Account>>> all() {
 
@@ -38,7 +38,7 @@ public class AccountController {
         return ResponseEntity.ok(Map.of("content", accounts));
     }
     //Post Mapping
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<Account> create(@RequestBody Account account, @RequestParam String password) {
         logger.debug("Add new account");
@@ -50,7 +50,7 @@ public class AccountController {
     }
 
     //PUT Mapping
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/edit")
     public ResponseEntity<Account> update(@RequestBody Account account) {
         Account updated = accountService.update(account);
@@ -61,7 +61,7 @@ public class AccountController {
     }
 
     //Delete Mapping
-//    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         logger.debug("Delete Mapping");

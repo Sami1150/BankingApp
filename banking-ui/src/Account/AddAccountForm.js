@@ -40,9 +40,9 @@ const AddAccountForm = ({ onAdd }) => {
 
       if (response.status === 200) {
         // Show a success toast notification
-        toast.success('Account created successfully!', {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        // toast.success('Account created successfully!', {
+        //   position: toast.POSITION.TOP_RIGHT,
+        // });
         
         // Call the onAdd function to add the new account to the list
         onAdd(response.data);

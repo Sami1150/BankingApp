@@ -50,7 +50,7 @@ databaseChangeLog:
                   value: '2023-07-03'
               - column:
                   name: amount
-                  value: '-200.00'
+                  value: '200.00'
               - column:
                   name: balance_type
                   value: 'DB'
@@ -86,7 +86,7 @@ databaseChangeLog:
                   value: '2023-07-05'
               - column:
                   name: amount
-                  value: '-100.00'
+                  value: '100.00'
               - column:
                   name: balance_type
                   value: 'DB'
@@ -129,3 +129,21 @@ databaseChangeLog:
               - column:
                   name: account_id
                   value: '5'
+        - insert:
+            tableName: balance
+            columns:
+              - column:
+                  name: balance_id
+                  value: '1000'
+              - column:
+                  name: date
+                  value: '2001-10-04'
+              - column:
+                  name: amount
+                  value: '0.00'
+              - column:
+                  name: balance_type
+                  value: 'CR'
+              - column:
+                  name: account_id
+                  value: '1000'

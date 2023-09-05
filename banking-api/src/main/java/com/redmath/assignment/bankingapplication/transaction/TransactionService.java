@@ -121,17 +121,21 @@ public class TransactionService {
         // Get the account IDs of the sender and receiver
         Long receiverAccountId = AccountOfReceiver.getId();
         logger.debug("Account Id of sender is {} and receiver is } :", senderAccountId, receiverAccountId);
-        // Deduct funds from the sender's account
-        Transaction senderTransaction = performTransaction(senderAccountId, amount, "Debit Transaction", "DB");
 
-        // Add funds to the receiver's account
-        Transaction receiverTransaction = performTransaction(receiverAccountId, amount, "Credit Transaction", "CR");
+        if(accountRepository.existsById(receiverAccountId)) {
+            // Deduct funds from the sender's account
+            Transaction senderTransaction = performTransaction(senderAccountId, amount, "Debit Transaction", "DB");
 
-        // Save both transactions to the database
-        create(senderTransaction);
-        create(receiverTransaction);
+            // Add funds to the receiver's account
+            Transaction receiverTransaction = performTransaction(receiverAccountId, amount, "Credit Transaction", "CR");
 
-        return senderTransaction; // You can return any of the transactions as needed
+            // Save both transactions to the database
+            create(senderTransaction);
+            create(receiverTransaction);
+
+            return senderTransaction; // You can return any of the transactions as needed
+        }
+        return null;
     }
 
 

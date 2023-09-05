@@ -35,7 +35,6 @@ public class AccountService {
         String username = authentication.getName();
 
         Optional account;
-
         logger.debug("Fetching account with username {}", username );
         if(username.equals("admin"))
         {
@@ -43,7 +42,7 @@ public class AccountService {
             return Optional.ofNullable(accounts.isEmpty() ? null : accounts);
 
         }
-        else{
+        else if (username.contains("user")){
 
             // Retrieve the user object using the username
             User user = userService.findByUsername(username);
@@ -55,6 +54,7 @@ public class AccountService {
             account = accountRepository.findById(accountId);
             return account;
         }
+        return null;
     }
     public List<Account> findAll() {
         logger.info("All account details are: ");

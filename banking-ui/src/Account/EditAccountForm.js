@@ -28,9 +28,9 @@ const EditAccountForm = ({ account, onSave, onClose }) => {
       onSave(editedAccount);
 
       // Show a success toast notification
-      toast.success('Account updated successfully!', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      // toast.warn('Account updated successfully!', {
+      //   position: toast.POSITION.TOP_RIGHT,
+      // });
 
       // Close the edit form
       onClose();

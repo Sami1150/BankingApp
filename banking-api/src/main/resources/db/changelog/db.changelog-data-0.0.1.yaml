@@ -78,3 +78,18 @@ databaseChangeLog:
               - column:
                   name: address
                   value: 789 Maple Ave
+        - insert:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  value: '1000'
+              - column:
+                  name: name
+                  value: 'admin'
+              - column:
+                  name: email
+                  value: 'admin'
+              - column:
+                  name: address
+                  value: 'admin'
