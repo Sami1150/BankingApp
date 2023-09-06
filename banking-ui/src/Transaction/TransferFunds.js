@@ -18,6 +18,15 @@ const TransferFunds = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Check if the amount is greater than 100
+    if (parseFloat(amount) <= 0) {
+      // Show an error toast notification
+      toast.error('Amount must be greater than 0', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return; // Exit the function if the amount is not valid
+    }
+
     try {
       const response = await axios.post(
         '/api/v1/transaction/transferfunds',
