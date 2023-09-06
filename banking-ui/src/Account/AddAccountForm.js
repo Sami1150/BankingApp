@@ -11,6 +11,8 @@ const AddAccountForm = ({ onAdd }) => {
   });
 
   const [password, setPassword] = useState(''); // Separate state for password
+    const [username, setUsername] = useState(''); // Separate state for password
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +25,10 @@ const AddAccountForm = ({ onAdd }) => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value); // Update the password state
   };
+    const handleUsernameChange = (e) => {
+    setUsername(e.target.value); // Update the password state
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +36,7 @@ const AddAccountForm = ({ onAdd }) => {
       // Send a POST request to create a new account with the password as a parameter
       const response = await axios.post('/api/v1/account/add', newAccount, {
         params: {
+          username: username,
           password: password, // Pass the password as a parameter
         },
         withCredentials: true,
@@ -54,15 +61,16 @@ const AddAccountForm = ({ onAdd }) => {
           address: '',
         });
         setPassword('');
+        setUsername('');
       } else {
         // Show an error toast notification
-        toast.error('Error creating account. Please try again.', {
+        toast.error('Error creating account. Please try with different username.', {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
     } catch (error) {
       // Handle errors and show an error toast notification
-      toast.error('Error creating account. Please try again.', {
+      toast.error('Error creating account. Please try with different username.', {
         position: toast.POSITION.TOP_RIGHT,
       });
       console.error('Error creating account:', error);
@@ -85,6 +93,19 @@ const AddAccountForm = ({ onAdd }) => {
             name="name"
             value={newAccount.name}
             onChange={handleInputChange}
+          />
+        </div>
+                <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="text" // Use type="password" for password input
+            className="form-control"
+            id="username"
+            name="username"
+            value={username}
+            onChange={handleUsernameChange}
           />
         </div>
         <div className="mb-3">

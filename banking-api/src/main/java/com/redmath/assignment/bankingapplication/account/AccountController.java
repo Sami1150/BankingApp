@@ -1,5 +1,6 @@
 package com.redmath.assignment.bankingapplication.account;
 
+import com.redmath.assignment.bankingapplication.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     private  final Logger logger= LoggerFactory.getLogger(getClass());
-
+    @Autowired
+    private UserRepository userRepository;
     @GetMapping
     public ResponseEntity<Map<String, Optional<Account>>> findAll(Authentication authentication) {
 
@@ -40,9 +42,12 @@ public class AccountController {
     //Post Mapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/add")
-    public ResponseEntity<Account> create(@RequestBody Account account, @RequestParam String password) {
+    public ResponseEntity<Account> create(@RequestBody Account account,@RequestParam String username, @RequestParam String password) {
         logger.debug("Add new account");
-        Account created = accountService.create(account,password);
+        if (userRepository.existsByUserName(username)){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        Account created = accountService.create(account, username, password);
         if (created ==null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
