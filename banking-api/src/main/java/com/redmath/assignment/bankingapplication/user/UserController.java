@@ -30,19 +30,19 @@ public class UserController {
 
         return ResponseEntity.ok(Map.of("content", users));
     }
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> credentials) {
-        String username = credentials.get("username");
-        String password = credentials.get("password");
-        logger.debug("Username is {} and password is {}:",username, password);
-        String loginResult = userService.login(username, password);
-        logger.debug("loginResult is {} : ",loginResult);
-        if (loginResult.equals("Login Successful")) {
-            return ResponseEntity.ok(loginResult);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResult);
-        }
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login(@RequestBody Map<String, String> credentials) {
+//        String username = credentials.get("username");
+//        String password = credentials.get("password");
+//        logger.debug("Username is {} and password is {}:",username, password);
+//        String loginResult = userService.login(username, password);
+//        logger.debug("loginResult is {} : ",loginResult);
+//        if (loginResult.equals("Login Successful")) {
+//            return ResponseEntity.ok(loginResult);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResult);
+//        }
+//    }
     @GetMapping("/role")
     public String getRole(Authentication authentication){
         String username= authentication.getName();

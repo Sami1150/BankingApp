@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Some More ###
+/.idea
+/.idea*
+
+/banking-api/.mvn
+/banking-api/ban
+
+/banking-ui/node_nodules
+
+/banking-ui/node_nodules

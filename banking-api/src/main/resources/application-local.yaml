@@ -1,0 +1,25 @@
+#DB
+bankingapp:
+  db:
+    url: jdbc:h2:mem:bankDB
+    username: sa
+    password:
+  liquibase:
+    contexts: local
+spring:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto:none
+  h2:
+    console:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: when-authorized
