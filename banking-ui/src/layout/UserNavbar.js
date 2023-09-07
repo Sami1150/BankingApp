@@ -17,6 +17,12 @@ import ViewUserAccountDetails from '../Account/ViewUserAccountDetails';
 import BalanceHistory from '../Balance/BalanceHistory';
 
 const UserNavbar = () => {
+  const handleLogout = () => {
+    window.location.href = 'http://localhost:3000/logout';
+  };
+  const handleLogin = () => {
+    window.location.href = 'http://localhost:3000/login';
+  };
   return (
     <div className="App">
       <Router>
@@ -66,11 +72,15 @@ const UserNavbar = () => {
                     Transfer Funds
                   </Link>
                 </li>
-
                 <li className="nav-item">
-                  <Link className="nav-link" to="http://localhost:8080/logout">
-                    Logout
-                  </Link>
+                <button className="nav-link" onClick={handleLogin}>
+              Login
+            </button>
+                </li>
+                <li className="nav-item">
+                <button className="nav-link" onClick={handleLogout}>
+              Logout
+            </button>
                 </li>
               </ul>
             </div>
@@ -96,7 +106,10 @@ const UserNavbar = () => {
 
 const AdminNavbar = () => {
   const handleLogout = () => {
-    window.location.href = 'http://localhost:8080/logout';
+    window.location.href = 'http://localhost:3000/login?logout';
+  };
+  const handleLogin = () => {
+    window.location.href = 'http://localhost:3000/login';
   };
   return (
     <div className="App">
@@ -126,6 +139,11 @@ const AdminNavbar = () => {
                   <Link className="nav-link active" aria-current="page" to="/">
                     Home
                   </Link>
+                </li>
+                <li className="nav-item">
+                <button className="nav-link" onClick={handleLogin}>
+              Login
+            </button>
                 </li>
                 <li className="nav-item">
                 <button className="nav-link" onClick={handleLogout}>

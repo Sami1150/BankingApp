@@ -42,8 +42,6 @@ public class WebSecurityConfiguration {
         http.authorizeHttpRequests(config -> config.anyRequest().authenticated());
         http.csrf(config -> config.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()));
-
-//        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
 

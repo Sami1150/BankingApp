@@ -4,8 +4,6 @@ bankingapp:
     url: jdbc:h2:mem:bankDB
     username: sa
     password:
-  liquibase:
-    contexts: local
 spring:
   jpa:
     open-in-view: false
@@ -14,6 +12,8 @@ spring:
   h2:
     console:
       enabled: true
+  liquibase:
+    contexts: local
 
 management:
   endpoints:
@@ -22,4 +22,8 @@ management:
         include: '*'
   endpoint:
     health:
-      show-details: when-authorized
+      show-details: always
+springdoc:
+  show-login-endpoint: true
+
+

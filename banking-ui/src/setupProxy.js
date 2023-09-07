@@ -13,20 +13,28 @@ module.exports = function (app) {
     '/login',
     createProxyMiddleware({
       // 👇️ make sure to update your target
-      target: 'http://localhost:8080/login',
+      target: 'http://localhost:8080',
       changeOrigin: true,
     }),
   );
+  app.use(
+    '/login?logout',
+    createProxyMiddleware({
+      // 👇️ make sure to update your target
+      target: 'http://localhost:8080',
+      changeOrigin: true,
+    }),
+  )
   app.use(
     '/logout',
     createProxyMiddleware({
       // 👇️ make sure to update your target
-      target: 'http://localhost:8080/logout',
+      target: 'http://localhost:8080',
       changeOrigin: true,
     }),
   );
   app.use(
-    '/banking',
+    '/login?logout',
     createProxyMiddleware({
       // 👇️ make sure to update your target
       target: 'http://localhost:8080/',
