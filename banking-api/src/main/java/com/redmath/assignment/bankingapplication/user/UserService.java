@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService, ApplicationListener<AbstractAuthenticationEvent>
+public class UserService implements UserDetailsService//, ApplicationListener<AbstractAuthenticationEvent>
 {
     public static final String STATUS_ACTIVE = "ACTIVE";
 
@@ -45,20 +45,20 @@ public class UserService implements UserDetailsService, ApplicationListener<Abst
                 true, true, locked, AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
     }
 
-    @Override
-    public void onApplicationEvent(AbstractAuthenticationEvent event) {
-        if (event instanceof AuthenticationSuccessEvent success) {
-            logger.info("::security:: authentication successful for user: {}", success.getAuthentication().getName());
-        } else if (event instanceof InteractiveAuthenticationSuccessEvent success) {
-            logger.info("::security:: login successful for user: {}", success.getAuthentication().getName());
-        } else if (event instanceof AbstractAuthenticationFailureEvent failure) {
-            logger.warn("::security:: authentication failed for user: {}, reason: {}",
-                    failure.getAuthentication().getName(), String.valueOf(failure.getException()));
-        } else {
-            logger.info("::security:: authentication event for user: {}, {}", event.getAuthentication().getName(),
-                    event);
-        }
-    }
+//    @Override
+//    public void onApplicationEvent(AbstractAuthenticationEvent event) {
+//        if (event instanceof AuthenticationSuccessEvent success) {
+//            logger.info("::security:: authentication successful for user: {}", success.getAuthentication().getName());
+//        } else if (event instanceof InteractiveAuthenticationSuccessEvent success) {
+//            logger.info("::security:: login successful for user: {}", success.getAuthentication().getName());
+//        } else if (event instanceof AbstractAuthenticationFailureEvent failure) {
+//            logger.warn("::security:: authentication failed for user: {}, reason: {}",
+//                    failure.getAuthentication().getName(), String.valueOf(failure.getException()));
+//        } else {
+//            logger.info("::security:: authentication event for user: {}, {}", event.getAuthentication().getName(),
+//                    event);
+//        }
+//    }
     public List<User> findAll() {
         logger.debug("Fetching all accounts");
         return repository.findAll();
