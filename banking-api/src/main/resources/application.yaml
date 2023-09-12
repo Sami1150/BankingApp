@@ -7,12 +7,33 @@ spring:
     url: ${bankingapp.db.url}
     username: ${bankingapp.db.username}
     password: ${bankingapp.db.password}
+  boot:
+    admin:
+      client:
+        url: http://localhost:8081
+        enabled: true
+        auto-registeration: true
 #server:
 #  servlet:
 #    context-path: /bankingapp
+#logging:
+#  level:
+#    '[com.redmath.assignment.bankingapplication]': debug
 logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] ${HOSTNAME}"
+  file:
+#    name: ${bankingapp.log.dir:target}/banking.log
+    name: banking.log
+    max-history: 20
+    max-size: 20MB
   level:
+    sql: debug
+    '[org.springframework.web.servlet.DispatcherServlet]': debug
+    '[org.springframework.web.client.RestTemplate]': debug
     '[com.redmath.assignment.bankingapplication]': debug
+
+
 
 
 
