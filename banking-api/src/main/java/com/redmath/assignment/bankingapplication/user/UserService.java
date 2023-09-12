@@ -4,6 +4,7 @@ import com.redmath.assignment.bankingapplication.account.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationEvent;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
@@ -59,6 +60,10 @@ public class UserService implements UserDetailsService//, ApplicationListener<Ab
 //                    event);
 //        }
 //    }
+    @Cacheable("users")
+    public UserDetails loadUserByUsername(String jti, String userName) throws UsernameNotFoundException {
+        return loadUserByUsername(userName);
+    }
     public List<User> findAll() {
         logger.debug("Fetching all accounts");
         return repository.findAll();

@@ -15,15 +15,12 @@ import TransferFunds from '../Transaction/TransferFunds';
 import TransactionHistory from '../Transaction/TransactionHistory';
 import ViewUserAccountDetails from '../Account/ViewUserAccountDetails';
 import BalanceHistory from '../Balance/BalanceHistory';
-import Login from '../Pages/Login';
 
 const UserNavbar = () => {
   const handleLogout = () => {
     window.location.href = 'http://localhost:3000/logout';
   };
-  const handleLogin = () => {
-    window.location.href = 'http://localhost:3000/login';
-  };
+
   return (
     <div className="App">
       <Router>
@@ -73,17 +70,6 @@ const UserNavbar = () => {
                     Transfer Funds
                   </Link>
                 </li>
-                {/* <li className="nav-item">
-                <button className="nav-link" onClick={handleLogin}>
-              Login
-            </button>
-                </li> */}
-                <li className="nav-item">
-                  <Link className="nav-link" to="/Login">
-                    Login
-                  </Link>
-                </li>
-
                 <li className="nav-item">
                 <button className="nav-link" onClick={handleLogout}>
               Logout
@@ -104,8 +90,6 @@ const UserNavbar = () => {
           <Route path="/TransactionForm" element={<TransactionForm />} />
           <Route path="/TransferFunds" element={<TransferFunds />} />
           <Route path="/Logout" />
-          <Route path="/Login" element={<Login />} />
-
           <Route path="/ViewAccounts" element={<ViewAccounts />} />
         </Routes>
       </Router>
@@ -116,9 +100,6 @@ const UserNavbar = () => {
 const AdminNavbar = () => {
   const handleLogout = () => {
     window.location.href = 'http://localhost:3000/login?logout';
-  };
-  const handleLogin = () => {
-    window.location.href = 'http://localhost:3000/login';
   };
   return (
     <div className="App">
@@ -149,16 +130,6 @@ const AdminNavbar = () => {
                     Home
                   </Link>
                 </li>
-                {/* <li className="nav-item">
-                <button className="nav-link" onClick={handleLogin}>
-              Login
-            </button>
-                </li> */}
-                <li className="nav-item">
-                  <Link className="nav-link" to="/Login">
-                    Login
-                  </Link>
-                </li>
                 <li className="nav-item">
                 <button className="nav-link" onClick={handleLogout}>
               Logout
@@ -171,7 +142,6 @@ const AdminNavbar = () => {
 
         <Routes>
           <Route path="/" element={<ViewAccounts />} />
-          <Route path="/" element={<Login />} />
           <Route path="/Logout" />
         </Routes>
       </Router>
