@@ -27,3 +27,13 @@
     - Prometheus port: 9090
     - Application port: 8080
     - Admin server/client port: 8081
+    - Zipkin Port: 9411
+
+
+***** Distributed Tracing *****
+    - Goto https://mvnrepository.com/artifact/io.zipkin.java/zipkin-server and download jar file
+    - Extract jar file using cmd: "java -jar zipkin-exec.jar"
+    - We can see zipkin running on localhost:9411
+    - Then goto https://start.spring.io/ and add zipkin in dependencies. Paste all related dependencies in your project
+    - Adjust properties, we may use profile: application-zipkin.yaml for this purpose.
+

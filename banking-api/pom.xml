@@ -17,8 +17,7 @@
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		<spring-boot-admin.version>3.1.5</spring-boot-admin.version>
-
+<!--		<spring-cloud.version>2022.0.4</spring-cloud.version>-->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -82,31 +81,42 @@
 
 
 <!--		Dependency for visualizing actuator endpoints-->
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-starter-client</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>de.codecentric</groupId>-->
+<!--			<artifactId>spring-boot-admin-starter-client</artifactId>-->
+<!--		</dependency>-->
 
 <!--	For grafana add dependency-->
+<!--		<dependency>-->
+<!--			<groupId>io.micrometer</groupId>-->
+<!--			<artifactId>micrometer-registry-prometheus</artifactId>-->
+<!--			<version>1.10.7</version>-->
+<!--		</dependency>-->
+
 		<dependency>
 			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-			<version>1.10.7</version>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-reporter-brave</artifactId>
+		</dependency>
+
 	</dependencies>
 	<!--		Dependency Management for visualizing actuator endpoints-->
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-dependencies</artifactId>
-				<version>${spring-boot-admin.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+<!--	<dependencyManagement>-->
+<!--		<dependencies>-->
+<!--			<dependency>-->
+<!--				<groupId>de.codecentric</groupId>-->
+<!--				<artifactId>spring-boot-admin-dependencies</artifactId>-->
+<!--				<version>3.1.5</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope>-->
+<!--			</dependency>-->
+<!--		</dependencies>-->
+<!--	</dependencyManagement>-->
 
 
 	<build>
