@@ -97,7 +97,9 @@ public class WebSecurityConfiguration  {
                 new AntPathRequestMatcher("/h2-console/**", "GET"), // Allow GET requests to h2-console
                 new AntPathRequestMatcher("/h2-console/**", "POST"),
                 new AntPathRequestMatcher("/actuator", "GET")
-                , new AntPathRequestMatcher("/actuator/**", "GET"));
+                , new AntPathRequestMatcher("/actuator/**", "GET"),
+                new AntPathRequestMatcher("/actuator", "POST")
+                , new AntPathRequestMatcher("/actuator/**", "POST"));
     }
     @Bean
 //    @CrossOrigin(origins = "http://localhost:3000",methods ={RequestMethod.POST, RequestMethod.GET,RequestMethod.OPTIONS})
