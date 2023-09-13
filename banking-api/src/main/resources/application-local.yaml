@@ -23,6 +23,7 @@ management:
   endpoint:
     health:
       show-details: always
+
 springdoc:
   show-login-endpoint: true
 
