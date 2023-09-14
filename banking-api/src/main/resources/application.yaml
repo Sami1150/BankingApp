@@ -1,12 +1,19 @@
 spring:
   profiles:
-    include: local, zipkin
+    include: local
+#    , zipkin
   application:
     name: bankingapp
   datasource:
     url: ${bankingapp.db.url}
     username: ${bankingapp.db.username}
     password: ${bankingapp.db.password}
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+
 #  boot:
 #    admin:
 #      client:
@@ -25,6 +32,7 @@ logging:
     '[org.springframework.web.servlet.DispatcherServlet]': debug
     '[org.springframework.web.client.RestTemplate]': debug
     '[com.redmath.assignment.bankingapplication]': debug
+
 
 
 

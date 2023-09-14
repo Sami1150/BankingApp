@@ -26,5 +26,8 @@ management:
 
 springdoc:
   show-login-endpoint: true
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] ${HOSTNAME}"
 
 
