@@ -37,3 +37,11 @@
     - Then goto https://start.spring.io/ and add zipkin in dependencies. Paste all related dependencies in your project
     - Adjust properties, we may use profile: application-zipkin.yaml for this purpose.
 
+***** Custom Error Handling *****
+    - Follow guidelines:
+        - https://www.baeldung.com/global-error-handler-in-a-spring-rest-api
+    - The github repo with code:
+        - https://github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-web-rest
+
+
+
