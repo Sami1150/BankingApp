@@ -1,7 +1,7 @@
 HELP.md
-target/
+#target/
 !banking-api/.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
+#!**/src/main/**/target/
 !**/src/test/**/target/
 
 ### STS ###
