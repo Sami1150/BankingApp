@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/account")
-@CrossOrigin(origins = "http://localhost:3000",methods = {RequestMethod.GET,RequestMethod.POST, RequestMethod.DELETE,RequestMethod.PUT})  // <- use your url of frontend
 public class AccountController {
 
     @Autowired

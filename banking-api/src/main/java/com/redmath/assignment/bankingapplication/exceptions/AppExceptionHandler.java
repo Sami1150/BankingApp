@@ -118,13 +118,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getHttpStatus());
     }
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)  // 401
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Object> unauthorizedAccess() {
-        System.out.print("Unauthorized Access");
-        final ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Unauthorized: " , LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value());
-        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getHttpStatus());
-    }
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)  // 401
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    public ResponseEntity<Object> unauthorizedAccess() {
+//        System.out.print("Unauthorized Access");
+//        final ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Unauthorized: " , LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value());
+//        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getHttpStatus());
+//    }
 
 
 }
