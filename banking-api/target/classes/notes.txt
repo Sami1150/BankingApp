@@ -1,0 +1,47 @@
+***** Add actuator visualization *****
+#Method one:
+    - Add "spring-boot-admin-starter-client" dependency and dependency management in our project+Add some properties related to actuator
+    - Create a new project and add "spring-boot-admin-starter-server" dependency + add @EnableAdminServer annotation in main class under @SpringBootApplication+let it run on 8081
+    - Now you can visualize on 8081
+
+#Method Two:
+    - Add dependency "micrometer-registry-prometheus" + verify it at /actuator, it should expose an endpoint
+    - Download Prometheus + edit yml configuration + run it ".\prometheus.exe" on cmd
+    - Prometheus runs by default on 9090 so you can see on 9090 the prometheus dashboard, You can verify by clicking global icon and adding sth
+    - Download grafana and run it in bin folder: ".\grafana-server.exe"
+    - Now go to localhost:3000. Default credentials are admin admin
+    - Then add Connections/datasources and add prometheus there and add server url: http://localhost:9090/
+    - Do "Save and Test" and create a dashboard
+    - Add multiple dashboards using different "Metrics Browser"
+  #Note:
+    - We are doing manually so we can use json of some build dashboards
+    - So goto settings, and save it as default dashboard
+    - Now goto any spring boot grafana dashboard and download json like : https://grafana.com/grafana/dashboards/12900-springboot-apm-dashboard/
+    - Goto dashboards and New-> Import and upload json. YOU ARE DONE NOW
+
+  #Note to change grafana port:
+    - Goto grafana/conf/defaults.ini on file explorer and edit port. Then restart grafana
+
+  #Note about ports:
+    - Grafana port: 8082
+    - Prometheus port: 9090
+    - Application port: 8080
+    - Admin server/client port: 8081
+    - Zipkin Port: 9411
+
+
+***** Distributed Tracing *****
+    - Goto https://mvnrepository.com/artifact/io.zipkin.java/zipkin-server and download jar file
+    - Extract jar file using cmd: "java -jar zipkin-exec.jar"
+    - We can see zipkin running on localhost:9411
+    - Then goto https://start.spring.io/ and add zipkin in dependencies. Paste all related dependencies in your project
+    - Adjust properties, we may use profile: application-zipkin.yaml for this purpose.
+
+***** Custom Error Handling *****
+    - Follow guidelines:
+        - https://www.baeldung.com/global-error-handler-in-a-spring-rest-api
+    - The github repo with code:
+        - https://github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-web-rest
+
+
+

@@ -1,0 +1,95 @@
+databaseChangeLog:
+  - changeSet:
+      id: data-0.0.1
+      author: account team
+      changes:
+        - insert:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  value: '1'
+              - column:
+                  name: name
+                  value: John Doe
+              - column:
+                  name: email
+                  value: john@example.com
+              - column:
+                  name: address
+                  value: 123 Main St
+        - insert:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  value: '2'
+              - column:
+                  name: name
+                  value: Jane Smith
+              - column:
+                  name: email
+                  value: jane@example.com
+              - column:
+                  name: address
+                  value: 456 Oak Ave
+        - insert:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  value: '3'
+              - column:
+                  name: name
+                  value: Michael Johnson
+              - column:
+                  name: email
+                  value: michael@example.com
+              - column:
+                  name: address
+                  value: 789 Elm Rd
+        - insert:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  value: '4'
+              - column:
+                  name: name
+                  value: Emily Brown
+              - column:
+                  name: email
+                  value: emily@example.com
+              - column:
+                  name: address
+                  value: 567 Pine Ln
+        - insert:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  value: '5'
+              - column:
+                  name: name
+                  value: David Wilson
+              - column:
+                  name: email
+                  value: david@example.com
+              - column:
+                  name: address
+                  value: 789 Maple Ave
+        - insert:
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  value: '1000'
+              - column:
+                  name: name
+                  value: 'admin'
+              - column:
+                  name: email
+                  value: 'admin'
+              - column:
+                  name: address
+                  value: 'admin'

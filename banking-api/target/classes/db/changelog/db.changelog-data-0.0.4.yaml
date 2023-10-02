@@ -1,0 +1,167 @@
+databaseChangeLog:
+  - changeSet:
+      id: data-0.0.4
+      author: user team
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: '1'
+              - column:
+                  name: user_name
+                  value: 'user1'
+              - column:
+                  name: password
+                  value: '{noop}password1'
+              - column:
+                  name: roles
+                  value: 'USER'
+              - column:
+                  name: status
+                  value: 'ACTIVE'
+              - column:
+                  name: login_attempts
+                  value: '0'
+              - column:
+                  name: login_at
+                  value: '2023-07-01 10:00:00'
+              - column:
+                  name: account_id
+                  value: '1'
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: '2'
+              - column:
+                  name: user_name
+                  value: 'user2'
+              - column:
+                  name: password
+                  value: '{noop}password2'
+              - column:
+                  name: roles
+                  value: 'USER'
+              - column:
+                  name: status
+                  value: 'ACTIVE'
+              - column:
+                  name: login_attempts
+                  value: '0'
+              - column:
+                  name: login_at
+                  value: '2023-07-02 11:00:00'
+              - column:
+                  name: account_id
+                  value: '2'
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: '3'
+              - column:
+                  name: user_name
+                  value: 'user3'
+              - column:
+                  name: password
+                  value: '{noop}password3'
+              - column:
+                  name: roles
+                  value: 'USER'
+              - column:
+                  name: status
+                  value: 'ACTIVE'
+              - column:
+                  name: login_attempts
+                  value: '2'
+              - column:
+                  name: login_at
+                  value: '2023-07-03 12:00:00'
+              - column:
+                  name: account_id
+                  value: '3'
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: '4'
+              - column:
+                  name: user_name
+                  value: 'user4'
+              - column:
+                  name: password
+                  value: '{noop}password4'
+              - column:
+                  name: roles
+                  value: 'USER'
+              - column:
+                  name: status
+                  value: 'ACTIVE'
+              - column:
+                  name: login_attempts
+                  value: '0'
+              - column:
+                  name: login_at
+                  value: '2023-07-04 13:00:00'
+              - column:
+                  name: account_id
+                  value: '4'
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: '5'
+              - column:
+                  name: user_name
+                  value: 'user5'
+              - column:
+                  name: password
+                  value: '{noop}password5'
+              - column:
+                  name: roles
+                  value: 'USER'
+              - column:
+                  name: status
+                  value: 'ACTIVE'
+              - column:
+                  name: login_attempts
+                  value: '0'
+              - column:
+                  name: login_at
+                  value: '2023-07-05 14:00:00'
+              - column:
+                  name: account_id
+                  value: '5'
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: '6'
+              - column:
+                  name: user_name
+                  value: 'admin'
+              - column:
+                  name: password
+                  value: '{noop}admin'
+              - column:
+                  name: roles
+                  value: 'ROLE_ADMIN'
+              - column:
+                  name: status
+                  value: 'ACTIVE'
+              - column:
+                  name: login_attempts
+                  value: '1'
+              - column:
+                  name: login_at
+                  value: '2023-07-03 12:00:00'
+              - column:
+                  name: account_id
+                  value: 1000

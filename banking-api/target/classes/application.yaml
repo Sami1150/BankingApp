@@ -1,0 +1,67 @@
+spring:
+  profiles:
+    include: local
+#    , zipkin
+  application:
+    name: bankingapp
+  datasource:
+    url: ${bankingapp.db.url}
+    username: ${bankingapp.db.username}
+    password: ${bankingapp.db.password}
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:8081
+
+
+#server:
+#  servlet:
+#    context-path: /bankingapp
+#logging:
+#  level:
+#    '[com.redmath.assignment.bankingapplication]': debug
+logging:
+  level:
+    sql: debug
+    '[org.springframework.web.servlet.DispatcherServlet]': debug
+    '[org.springframework.web.client.RestTemplate]': debug
+    '[com.redmath.assignment.bankingapplication]': debug
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#spring.security.user.name=admin
+#spring.security.user.password=admin
+#spring.security.user.role=test
+
+##CORS Configuration
+#spring.web.cors.allowed-origins=*
+#spring.web.cors.allowed-methods=GET,POST,PUT,DELETE,OPTIONS
+#spring.web.cors.allowed-headers=Authorization,Content-Type,Accept
+#spring.web.cors.allow-credentials=true
+#spring.web.cors.max-age=3600
+#management.endpoints.web.exposure.include= *
+#management.endpoint.health.show-details=always
+
+# Set pool size
+#spring:datasource.hikari.maximum-pool-size=10
