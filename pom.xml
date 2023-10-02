@@ -5,7 +5,6 @@
 
     <groupId>com.redmath.assignment</groupId>
     <artifactId>bankingapplication</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>bankingapplication</name>
 
     <packaging>pom</packaging>
